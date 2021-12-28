@@ -1,18 +1,28 @@
-<pre>{{ form.getControl(username)?.errors | json }}</pre>
-<pre>{{ form.getControl(email)?.errors | json }}</pre>
+<h1>UpdateFormErrors</h1>
 
 <form #form="ngForm" novalidate (submit)="save(form)">
-  <div class="control">
-    <input type="text" #username="ngModel" name="username" [(ngModel)]="item.username" placeholder="username" required>
+  <div class="form-group" [ngClass]="{'has-error': username.invalid && (!username.pristine || form.submitted)}">
+    <label for="username">Username</label>
+    <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Username"
+           #username="ngModel" name="username" [(ngModel)]="item.username" required>
   </div>
 
-  <div class="control">
-    <input type="email" #email="ngModel" name="email" [(ngModel)]="item.email" placeholder="e-mail" required email>
+  <small><i>username?.errors | json</i></small>
+  <pre>{{ username?.errors | json }}</pre>
+
+  <div class="form-group" [ngClass]="{'has-error': email.invalid && (!email.pristine || form.submitted)}">
+    <label for="email">E-mail</label>
+    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-mail"
+           #email="ngModel" name="email" [(ngModel)]="item.email" required email>
   </div>
 
+  <small><i>email?.errors | json</i></small>
+  <pre>{{ email?.errors | json }}</pre>
+
   <div class="control">
-    <button>
+    <button class="btn btn-primary" type="submit" [disabled]="loading">
       {{ loading ? 'Saving' : 'Save' }}
     </button>
   </div>
 </form>
+
